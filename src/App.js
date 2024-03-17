@@ -50,10 +50,10 @@ function Board({ turn, squares, onPlay }) {
             const square = i*3+j;
 
             boardRow.push(
-                <Square value={squares[square]} onSquareClick={() => handleClick(square)} />
+                <Square key={`board-square-${i}-${j}`} value={squares[square]} onSquareClick={() => handleClick(square)} />
             );
         } 
-        boardRows.push(<div key={i} className="board-row">{boardRow}</div>);
+        boardRows.push(<div className="board-row">{boardRow}</div>);
     }
 
     return (
@@ -65,6 +65,15 @@ function Board({ turn, squares, onPlay }) {
 }
 
 export default function Game() {
+
+    /*
+        TODO: When you play on one position of a board, you have to play on that position of the
+              whole game. Create a highlight around the game that is active every turn.
+        
+              Every game is active during the first turn.
+
+              The player that first reaches 5 won games wins the total game.
+    */
 
     const [turn, setTurn] = useState(0);
     const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -108,15 +117,15 @@ export default function Game() {
         for (let j = 0; j < 3; j++) {
             gameRow.push(
                 <div className="game-board">
-                    <Board turn={turn} squares={currentSquares} onPlay={handlePlay} />
+                    <Board key={`game-board-${i}-${j}`} turn={turn} squares={currentSquares} onPlay={handlePlay} />
                 </div>
             );
         } 
-        gameRows.push(<div key={i} className="game-column">{gameRow}</div>);
+        gameRows.push(<div key={`game-column-${i}`} className="game-column">{gameRow}</div>);
     }
 
     return (
-        <div className="game">
+        <div key="Game" className="game">
             {gameRows}
             <div className="game-info">
                 <ul>{moves}</ul>

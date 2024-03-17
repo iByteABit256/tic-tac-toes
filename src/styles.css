@@ -86,7 +86,8 @@ body {
 }
 
 .game-info {
-  margin-left: 150px;
+  display: flex;
+  margin-left: 10%;
 }
 
 .game-board {
@@ -95,6 +96,7 @@ body {
 
 .game-column {
   margin-left: 5%;
+  margin-right: 10px;
 }
 
 .move-counter {
