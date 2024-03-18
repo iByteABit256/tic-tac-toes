@@ -58,7 +58,22 @@ body {
 
 .square {
   background: #fff;
-  border: 1px solid #999;
+  border: 1px solid black;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+
+.active-square {
+  background: #fff;
+  border: 1px solid red;
   float: left;
   font-size: 24px;
   font-weight: bold;
@@ -80,23 +95,25 @@ body {
 .status {
   margin-bottom: 10px;
 }
+
 .game {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .game-info {
   display: flex;
-  margin-left: 10%;
+  margin-top: 50px;
 }
 
 .game-board {
-  margin-top: 30%;
+  margin-right: 20px;
 }
 
-.game-column {
-  margin-left: 5%;
-  margin-right: 10px;
+.game-row {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
 }
 
 .move-counter {

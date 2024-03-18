@@ -1,14 +1,17 @@
 import { useState } from "react";
 
-function Square({ value, onSquareClick }) {
+function Square({ value, onSquareClick, isActive }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button
+      className={isActive ? "active-square" : "square"}
+      onClick={onSquareClick}
+    >
       {value}
     </button>
   );
 }
 
-function Board({ turn, squares, onPlay }) {
+function Board({ boardNum, turn, squares, onPlay, isActive }) {
   const xIsNext = turn % 2 === 0;
 
   function nextPlayer() {
@@ -16,7 +19,7 @@ function Board({ turn, squares, onPlay }) {
   }
 
   const winner = calculateWinner(squares);
-  const gameIsTie = !winner && turn === 9;
+  const gameIsTie = !winner && boardIsFilled(squares);
   let status;
 
   if (winner) {
@@ -37,7 +40,7 @@ function Board({ turn, squares, onPlay }) {
     const nextSquares = squares.slice();
     nextSquares[i] = nextPlayer();
 
-    onPlay(nextSquares);
+    onPlay(boardNum, nextSquares, i);
   }
 
   const boardRows = [];
@@ -50,9 +53,10 @@ function Board({ turn, squares, onPlay }) {
 
       boardRow.push(
         <Square
-          key={`board-square-${i}-${j}`}
+          key={`board-${boardNum}-square-${i}-${j}`}
           value={squares[square]}
           onSquareClick={() => handleClick(square)}
+          isActive={isActive}
         />
       );
     }
@@ -75,16 +79,24 @@ export default function Game() {
               Every game is active during the first turn.
 
               The player that first reaches 5 won games wins the total game.
+
+              Next time I need to disable the boards that aren't active, and count the total
+              board victories of each player.
     */
 
   const [turn, setTurn] = useState(0);
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const currentSquares = history[turn];
+  const [history, setHistory] = useState([Array(9).fill(Array(9).fill(null))]);
+  const [activeBoard, setActiveBoard] = useState(null);
 
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, turn + 1), nextSquares];
+  const currentBoards = history[turn];
+
+  function handlePlay(boardNum, nextSquares, squareChanged) {
+    const nextBoards = currentBoards.slice();
+    nextBoards[boardNum] = nextSquares;
+    const nextHistory = [...history.slice(0, turn + 1), nextBoards];
     setHistory(nextHistory);
     setTurn(nextHistory.length - 1);
+    setActiveBoard(squareChanged);
   }
 
   function jumpTo(nextMove) {
@@ -116,19 +128,23 @@ export default function Game() {
     const gameRow = [];
 
     for (let j = 0; j < 3; j++) {
+      const boardIdx = i * 3 + j;
+
       gameRow.push(
         <div className="game-board">
           <Board
             key={`game-board-${i}-${j}`}
             turn={turn}
-            squares={currentSquares}
+            boardNum={boardIdx}
+            squares={currentBoards[boardIdx]}
             onPlay={handlePlay}
+            isActive={activeBoard ? activeBoard === boardIdx : true}
           />
         </div>
       );
     }
     gameRows.push(
-      <div key={`game-column-${i}`} className="game-column">
+      <div key={`game-row-${i}`} className="game-row">
         {gameRow}
       </div>
     );
@@ -164,4 +180,8 @@ function calculateWinner(squares) {
   }
 
   return null;
+}
+
+function boardIsFilled(squares) {
+  return !squares.some((square) => square === null);
 }
