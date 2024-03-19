@@ -1,5 +1,5 @@
 {
-  "name": "Tic Tac Toes",
+  "name": "tic-tac-toes",
   "version": "0.1.0",
   "main": "/src/index.js",
   "scripts": {

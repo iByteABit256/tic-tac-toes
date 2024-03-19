@@ -132,27 +132,44 @@ export default function Game() {
     setBoards(nextBoards);
     setTurn(turn + 1);
 
+    const unfinishedBoards = new Set();
+    for (let i = 0; i < 9; i++) {
+      if (!gamesEnded.has(i)) {
+        unfinishedBoards.add(i);
+      }
+    }
+
+    // Game has ended
+    if (unfinishedBoards.size === 0) {
+      const [scoreA, scoreB] = scores;
+
+      if (scoreA[1] === scoreB[1]) {
+        alert("Draw!");
+      } else if (scoreA[1] > scoreB[1]) {
+        alert(`Player ${scoreA[0]} has won with a score of ${scoreA[1]}!`);
+      } else {
+        alert(`Player ${scoreB[0]} has won with a score of ${scoreB[1]}!`);
+      }
+
+      setTurn(0);
+      setBoards(Array(9).fill(Array(9).fill(null)));
+      setActiveBoards(new Set([...Array(9).keys()]));
+      setGamesEnded(new Set());
+      setScores(
+        new Map([
+          ["X", 0],
+          ["O", 0],
+        ]),
+      );
+
+      return;
+    }
+
     // If next board has ended, start on any unfinished board
     if (gamesEnded.has(squareChanged)) {
-      const unfinishedBoards = new Set();
-      for (let i = 0; i < 9; i++) {
-        if (!gamesEnded.has(i)) {
-          unfinishedBoards.add(i);
-        }
-      }
       setActiveBoards(unfinishedBoards);
     } else {
       setActiveBoards(new Set([squareChanged]));
-    }
-
-    // If game has ended, show winner
-    if (activeBoards.size === 0) {
-      const finalWinner = [...scores.entries()].reduce((a, b) =>
-        a[1] > b[1] ? a : b,
-      );
-      alert(
-        `Player ${finalWinner[0]} has won with a score of ${finalWinner[1]}!!`,
-      );
     }
   }
 
