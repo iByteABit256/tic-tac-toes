@@ -12,13 +12,13 @@ function Square({ value, onSquareClick, isActive }) {
 }
 
 function Board({ boardNum, turn, squares, onPlay, isActive, onScoreChange }) {
-  const [winner, setWinner] = useState(null); 
-  const [isDraw, setIsDraw] = useState(false); 
+  const [winner, setWinner] = useState(null);
+  const [isDraw, setIsDraw] = useState(false);
 
   const xIsNext = turn % 2 === 0;
 
   function nextPlayer() {
-    return xIsNext ? 'X' : 'O';
+    return xIsNext ? "X" : "O";
   }
 
   let status;
@@ -27,7 +27,7 @@ function Board({ boardNum, turn, squares, onPlay, isActive, onScoreChange }) {
   } else if (isDraw) {
     status = "Tie!";
   } else {
-    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    status = `Next player: ${xIsNext ? "X" : "O"}`;
   }
 
   function handleClick(i) {
@@ -41,15 +41,15 @@ function Board({ boardNum, turn, squares, onPlay, isActive, onScoreChange }) {
 
     const nextWinner = calculateWinner(nextSquares);
     const nextDraw = !nextWinner && boardIsFilled(nextSquares);
-    
+
     if (nextWinner) {
       setWinner(nextWinner);
-      onScoreChange(boardNum, [nextWinner])
+      onScoreChange(boardNum, [nextWinner]);
     }
 
     if (nextDraw) {
       setIsDraw(true);
-      onScoreChange(boardNum, ['X','O'])
+      onScoreChange(boardNum, ["X", "O"]);
     }
 
     onPlay(boardNum, nextSquares, i);
@@ -116,9 +116,16 @@ export default function Game() {
 
   const [turn, setTurn] = useState(0);
   const [history, setHistory] = useState([Array(9).fill(Array(9).fill(null))]);
-  const [activeBoards, setActiveBoards] = useState(new Set([...Array(9).keys()]));
+  const [activeBoards, setActiveBoards] = useState(
+    new Set([...Array(9).keys()])
+  );
   const [gamesEnded, setGamesEnded] = useState(new Set());
-  const [scores, setScores] = useState(new Map([['X', 0], ['O', 0]]))
+  const [scores, setScores] = useState(
+    new Map([
+      ["X", 0],
+      ["O", 0],
+    ])
+  );
 
   const currentBoards = history[turn];
 
@@ -136,21 +143,25 @@ export default function Game() {
         if (!gamesEnded.has(i)) {
           unfinishedBoards.add(i);
         }
-      } 
+      }
       setActiveBoards(unfinishedBoards);
     } else {
       setActiveBoards(new Set([squareChanged]));
     }
 
     // If game has ended, show winner
-    if(activeBoards.size === 0) {
-      const finalWinner = [...scores.entries()].reduce((a, b) => a[1] > b[1] ? a : b);
-      alert(`Player ${finalWinner[0]} has won with a score of ${finalWinner[1]}!!`);
+    if (activeBoards.size === 0) {
+      const finalWinner = [...scores.entries()].reduce((a, b) =>
+        a[1] > b[1] ? a : b
+      );
+      alert(
+        `Player ${finalWinner[0]} has won with a score of ${finalWinner[1]}!!`
+      );
     }
   }
 
   function handleScoreChange(boardIdx, changes) {
-    changes.forEach((player) => { 
+    changes.forEach((player) => {
       scores.set(player, scores.get(player) + 1);
     });
     setScores(scores);
