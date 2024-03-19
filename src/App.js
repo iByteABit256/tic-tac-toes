@@ -15,6 +15,12 @@ function Board({ boardNum, turn, squares, onPlay, isActive, onScoreChange }) {
   const [winner, setWinner] = useState(null);
   const [isDraw, setIsDraw] = useState(false);
 
+  // If game has restarted, reset state
+  if (turn === 0 && (winner || isDraw)) {
+    setWinner(null);
+    setIsDraw(false);
+  }
+
   const xIsNext = turn % 2 === 0;
 
   function nextPlayer() {
@@ -107,12 +113,6 @@ function ScoreBoard({ scores }) {
 }
 
 export default function Game() {
-  /*
-      TODO:
-
-      - fix game end behaviour
-  */
-
   const [turn, setTurn] = useState(0);
   const [boards, setBoards] = useState(Array(9).fill(Array(9).fill(null)));
   const [activeBoards, setActiveBoards] = useState(
