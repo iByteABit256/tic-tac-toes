@@ -11,34 +11,46 @@ function Square({ value, onSquareClick, isActive }) {
   );
 }
 
-function Board({ boardNum, turn, squares, onPlay, isActive }) {
+function Board({ boardNum, turn, squares, onPlay, isActive, onScoreChange }) {
+  const [winner, setWinner] = useState(null); 
+  const [isDraw, setIsDraw] = useState(false); 
+
   const xIsNext = turn % 2 === 0;
 
   function nextPlayer() {
-    return xIsNext ? "X" : "O";
+    return xIsNext ? 'X' : 'O';
   }
 
-  const winner = calculateWinner(squares);
-  const gameIsTie = !winner && boardIsFilled(squares);
   let status;
-
   if (winner) {
     status = `Winner: ${winner}`;
+  } else if (isDraw) {
+    status = "Tie!";
   } else {
-    if (gameIsTie) {
-      status = "Tie!";
-    } else {
-      status = `Next player: ${xIsNext ? "X" : "O"}`;
-    }
+    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
   }
 
   function handleClick(i) {
-    if (squares[i] || winner || gameIsTie) {
+    // Can't play on board if game is ended, square is filled or board is inactive
+    if (squares[i] || winner || isDraw || !isActive) {
       return;
     }
 
     const nextSquares = squares.slice();
     nextSquares[i] = nextPlayer();
+
+    const nextWinner = calculateWinner(nextSquares);
+    const nextDraw = !nextWinner && boardIsFilled(nextSquares);
+    
+    if (nextWinner) {
+      setWinner(nextWinner);
+      onScoreChange(boardNum, [nextWinner])
+    }
+
+    if (nextDraw) {
+      setIsDraw(true);
+      onScoreChange(boardNum, ['X','O'])
+    }
 
     onPlay(boardNum, nextSquares, i);
   }
@@ -71,22 +83,42 @@ function Board({ boardNum, turn, squares, onPlay, isActive }) {
   );
 }
 
+function ScoreBoard({ scores }) {
+  return (
+    <div className="score-board">
+      <table>
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from(scores).map(([player, score]) => (
+            <tr key={player}>
+              <td>{player}</td>
+              <td>{score}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function Game() {
   /*
-        TODO: When you play on one position of a board, you have to play on that position of the
-              whole game. Create a highlight around the game that is active every turn.
-        
-              Every game is active during the first turn.
+      TODO:
 
-              The player that first reaches 5 won games wins the total game.
-
-              Next time I need to disable the boards that aren't active, and count the total
-              board victories of each player.
-    */
+      - fix game end behaviour
+      - fix turn history or remove it
+  */
 
   const [turn, setTurn] = useState(0);
   const [history, setHistory] = useState([Array(9).fill(Array(9).fill(null))]);
-  const [activeBoard, setActiveBoard] = useState(null);
+  const [activeBoards, setActiveBoards] = useState(new Set([...Array(9).keys()]));
+  const [gamesEnded, setGamesEnded] = useState(new Set());
+  const [scores, setScores] = useState(new Map([['X', 0], ['O', 0]]))
 
   const currentBoards = history[turn];
 
@@ -96,7 +128,35 @@ export default function Game() {
     const nextHistory = [...history.slice(0, turn + 1), nextBoards];
     setHistory(nextHistory);
     setTurn(nextHistory.length - 1);
-    setActiveBoard(squareChanged);
+
+    // If next board has ended, start on any unfinished board
+    if (gamesEnded.has(squareChanged)) {
+      const unfinishedBoards = new Set();
+      for (let i = 0; i < 9; i++) {
+        if (!gamesEnded.has(i)) {
+          unfinishedBoards.add(i);
+        }
+      } 
+      setActiveBoards(unfinishedBoards);
+    } else {
+      setActiveBoards(new Set([squareChanged]));
+    }
+
+    // If game has ended, show winner
+    if(activeBoards.size === 0) {
+      const finalWinner = [...scores.entries()].reduce((a, b) => a[1] > b[1] ? a : b);
+      alert(`Player ${finalWinner[0]} has won with a score of ${finalWinner[1]}!!`);
+    }
+  }
+
+  function handleScoreChange(boardIdx, changes) {
+    changes.forEach((player) => { 
+      scores.set(player, scores.get(player) + 1);
+    });
+    setScores(scores);
+
+    gamesEnded.add(boardIdx);
+    setGamesEnded(gamesEnded);
   }
 
   function jumpTo(nextMove) {
@@ -138,7 +198,8 @@ export default function Game() {
             boardNum={boardIdx}
             squares={currentBoards[boardIdx]}
             onPlay={handlePlay}
-            isActive={activeBoard ? activeBoard === boardIdx : true}
+            isActive={activeBoards.has(boardIdx)}
+            onScoreChange={handleScoreChange}
           />
         </div>
       );
@@ -152,6 +213,7 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
+      <ScoreBoard scores={scores} />
       {gameRows}
       <div className="game-info">
         <ul>{moves}</ul>

@@ -121,3 +121,23 @@ body {
   bottom: 15%;
   right: 50%;
 }
+
+.scoreboard {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
