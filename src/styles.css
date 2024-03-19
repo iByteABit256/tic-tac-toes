@@ -95,3 +95,20 @@ td {
 th {
   background-color: #f2f2f2;
 }
+
+.github-link {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #24292e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.github-link:hover {
+  background-color: #0366d6;
+}

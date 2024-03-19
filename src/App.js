@@ -214,6 +214,7 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
+      <a href="https://github.com/iByteABit256/tic-tac-toes" className="github-link">GitHub</a>
       <ScoreBoard scores={scores} />
       {gameRows}
     </div>
