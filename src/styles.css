@@ -116,12 +116,6 @@ body {
   flex-direction: row;
 }
 
-.move-counter {
-  position: fixed;
-  bottom: 15%;
-  right: 50%;
-}
-
 .scoreboard {
   max-width: 300px;
   margin: 0 auto;

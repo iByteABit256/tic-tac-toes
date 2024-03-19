@@ -111,11 +111,10 @@ export default function Game() {
       TODO:
 
       - fix game end behaviour
-      - fix turn history or remove it
   */
 
   const [turn, setTurn] = useState(0);
-  const [history, setHistory] = useState([Array(9).fill(Array(9).fill(null))]);
+  const [boards, setBoards] = useState(Array(9).fill(Array(9).fill(null)));
   const [activeBoards, setActiveBoards] = useState(
     new Set([...Array(9).keys()]),
   );
@@ -127,14 +126,11 @@ export default function Game() {
     ]),
   );
 
-  const currentBoards = history[turn];
-
   function handlePlay(boardNum, nextSquares, squareChanged) {
-    const nextBoards = currentBoards.slice();
+    const nextBoards = boards.slice();
     nextBoards[boardNum] = nextSquares;
-    const nextHistory = [...history.slice(0, turn + 1), nextBoards];
-    setHistory(nextHistory);
-    setTurn(nextHistory.length - 1);
+    setBoards(nextBoards);
+    setTurn(turn + 1);
 
     // If next board has ended, start on any unfinished board
     if (gamesEnded.has(squareChanged)) {
@@ -170,29 +166,6 @@ export default function Game() {
     setGamesEnded(gamesEnded);
   }
 
-  function jumpTo(nextMove) {
-    setTurn(nextMove);
-  }
-
-  const moves = history.map((_, move) => {
-    let description;
-
-    if (move === history.length - 1) {
-      description = `Current move: ${move}`;
-      return <div className="move-counter">{description}</div>;
-    } else if (move > 0) {
-      description = `Go to move ${move}`;
-    } else {
-      description = "Go to game start";
-    }
-
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
-
   const gameRows = [];
 
   for (let i = 0; i < 3; i++) {
@@ -207,7 +180,7 @@ export default function Game() {
             key={`game-board-${i}-${j}`}
             turn={turn}
             boardNum={boardIdx}
-            squares={currentBoards[boardIdx]}
+            squares={boards[boardIdx]}
             onPlay={handlePlay}
             isActive={activeBoards.has(boardIdx)}
             onScoreChange={handleScoreChange}
@@ -226,9 +199,6 @@ export default function Game() {
     <div key="Game" className="game">
       <ScoreBoard scores={scores} />
       {gameRows}
-      <div className="game-info">
-        <ul>{moves}</ul>
-      </div>
     </div>
   );
 }
