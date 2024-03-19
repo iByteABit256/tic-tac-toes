@@ -69,7 +69,7 @@ function Board({ boardNum, turn, squares, onPlay, isActive, onScoreChange }) {
           value={squares[square]}
           onSquareClick={() => handleClick(square)}
           isActive={isActive}
-        />
+        />,
       );
     }
     boardRows.push(<div className="board-row">{boardRow}</div>);
@@ -117,14 +117,14 @@ export default function Game() {
   const [turn, setTurn] = useState(0);
   const [history, setHistory] = useState([Array(9).fill(Array(9).fill(null))]);
   const [activeBoards, setActiveBoards] = useState(
-    new Set([...Array(9).keys()])
+    new Set([...Array(9).keys()]),
   );
   const [gamesEnded, setGamesEnded] = useState(new Set());
   const [scores, setScores] = useState(
     new Map([
       ["X", 0],
       ["O", 0],
-    ])
+    ]),
   );
 
   const currentBoards = history[turn];
@@ -152,10 +152,10 @@ export default function Game() {
     // If game has ended, show winner
     if (activeBoards.size === 0) {
       const finalWinner = [...scores.entries()].reduce((a, b) =>
-        a[1] > b[1] ? a : b
+        a[1] > b[1] ? a : b,
       );
       alert(
-        `Player ${finalWinner[0]} has won with a score of ${finalWinner[1]}!!`
+        `Player ${finalWinner[0]} has won with a score of ${finalWinner[1]}!!`,
       );
     }
   }
@@ -212,13 +212,13 @@ export default function Game() {
             isActive={activeBoards.has(boardIdx)}
             onScoreChange={handleScoreChange}
           />
-        </div>
+        </div>,
       );
     }
     gameRows.push(
       <div key={`game-row-${i}`} className="game-row">
         {gameRow}
-      </div>
+      </div>,
     );
   }
 
