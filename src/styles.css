@@ -33,7 +33,7 @@ h1 {
   display: flex;
   flex-wrap: wrap; /* Allow game boards to wrap onto new rows */
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 5px;
 }
 
 .game-board {
