@@ -1,5 +1,5 @@
 import { useState } from "react";
-import About from './About/About';
+import About from "./About/About";
 
 function Square({ value, onSquareClick, isActive }) {
   return (
@@ -215,8 +215,13 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
-      <a href="https://github.com/iByteABit256/tic-tac-toes" className="github-link">GitHub</a>
-      <About/>
+      <a
+        href="https://github.com/iByteABit256/tic-tac-toes"
+        className="github-link"
+      >
+        GitHub
+      </a>
+      <About />
       <ScoreBoard scores={scores} />
       {gameRows}
     </div>
