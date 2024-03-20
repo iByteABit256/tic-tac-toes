@@ -1,5 +1,5 @@
 import { useState } from "react";
-import About from './About/About.js';
+import About from './About/About';
 
 function Square({ value, onSquareClick, isActive }) {
   return (
