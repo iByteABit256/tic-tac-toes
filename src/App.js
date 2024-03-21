@@ -218,9 +218,7 @@ export default function Game() {
       <a
         href="https://github.com/iByteABit256/tic-tac-toes"
         className="github-link"
-      >
-        GitHub
-      </a>
+      />
       <About />
       <ScoreBoard scores={scores} />
       {gameRows}

@@ -10,7 +10,10 @@ export default function About() {
 
   return (
     <>
-      <button className={styles.about} onClick={toggleActive}>
+      <button
+        className={!active ? styles.about : styles.aboutInactive}
+        onClick={toggleActive}
+      >
         ?
       </button>
       {active ? (
@@ -35,8 +38,7 @@ export default function About() {
               <br />
               The game follows the following rules:
               <br />
-              <br />
-              <ol>
+              <ul>
                 <li>Each player plays on one board during their turn.</li>
                 <li>
                   The next player must play on the board that matches the
@@ -52,7 +54,7 @@ export default function About() {
                   number of wins.
                 </li>
                 <li>The first move can be played on any board.</li>
-              </ol>
+              </ul>
             </div>
           </div>
         </>

@@ -3,42 +3,49 @@ li {
 }
 
 .about {
-  position: fixed;
+  position: absolute;
   top: 20px;
-  right: 20px;
+  right: 5px;
   padding: 10px;
   background-color: darkorange;
   color: #fff;
   border: none;
+  width: 41px;
+  height: 41px;
   border-radius: 50%;
   font-size: 20px;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.25s ease;
   z-index: 999; /* Ensure it's above other elements */
-}
-
-.about:hover {
-  background-color: #e84118;
-}
-
-.closeWindowButton {
-  position: absolute;
-  top: 10px;
-  right: 50px;
-  background-color: red;
-  color: black;
-  font-size: 15px;
-  border: 0;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.aboutInactive {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  padding: 10px;
+  background-color: black;
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  z-index: 0; /* Ensure it's below other elements */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about:hover {
+  background-color: black;
 }
 
 .aboutWindow {
@@ -46,7 +53,7 @@ li {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: orange;
+  background-color: white;
   width: 90vw;
   max-width: 400px;
   border-radius: 10px;
@@ -60,7 +67,7 @@ li {
 }
 
 .aboutWindowContent {
-  padding-bottom: 60px; /* Added padding to allow space for close button */
+  padding-top: 40px;
 }
 
 .aboutWindow {
@@ -85,10 +92,10 @@ li {
 
 .closeWindowButton {
   position: absolute;
-  bottom: 10px; /* Positioned at the bottom */
+  top: 10px; /* Positioned at the bottom */
   right: 10px;
-  background-color: red;
-  color: black;
+  background-color: black;
+  color: white;
   font-size: 15px;
   border: 0;
   padding: 0;
@@ -103,7 +110,7 @@ li {
 }
 
 .closeWindowButton:hover {
-  background-color: darkred;
+  background-color: #3f3f3f;
 }
 
 .overlay {

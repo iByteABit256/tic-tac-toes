@@ -77,6 +77,7 @@ h1 {
 .score-board {
   max-width: 300px;
   margin-top: 20px;
+  margin-bottom: 40px;
   overflow-x: auto;
 }
 
@@ -97,19 +98,13 @@ th {
 }
 
 .github-link {
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #24292e;
-  color: #fff;
+  background: url(../media/github-mark.svg) no-repeat;
+  cursor: pointer;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  text-decoration: none;
-  transition: background-color 0.25s ease;
-}
-
-.github-link:hover {
-  background-color: #0366d6;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  position: absolute;
+  top: 20px;
+  right: 55px;
 }
