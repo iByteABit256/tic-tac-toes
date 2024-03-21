@@ -74,6 +74,10 @@ h1 {
   height: 60px;
 }
 
+.active-square:hover {
+  background-color: #b5880c;
+}
+
 .score-board {
   max-width: 300px;
   margin-top: 20px;
