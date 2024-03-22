@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./About.module.css";
+import styles from "./about.module.css";
 
 export default function About() {
   const [active, setActive] = useState(false);

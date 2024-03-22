@@ -1,4 +1,4 @@
-# Tic Tac Toes 
+# Tic Tac Toes
 
 <img src="media/tic-tac-toes-screenshot.png" width="400" height="500">
 
@@ -27,20 +27,28 @@ To run the project locally, follow these steps:
    ```bash
    git clone https://github.com/iByteABit/tic-tac-toes.git
 
+   ```
+
 2. **Navigate to the project directory:**
 
    ```bash
-   cd tic-tac-toes 
+   cd tic-tac-toes
+
+   ```
 
 3. **Install dependencies:**
 
    ```bash
-   npm install 
+   npm install
+
+   ```
 
 4. **Launch the application:**
 
    ```bash
-   npm start 
+   npm start
+
+   ```
 
 5. **Open your web browser and visit http://localhost:3000 to play the game.**
 
