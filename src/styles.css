@@ -16,19 +16,6 @@ h1 {
   margin-top: 20px;
 }
 
-.status {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.game {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .game-row {
   display: flex;
   flex-wrap: wrap; /* Allow game boards to wrap onto new rows */
@@ -48,57 +35,10 @@ h1 {
   max-width: 300px; /* Limit maximum width of each board */
 }
 
-.board-row {
+.game {
   display: flex;
-}
-
-.square {
-  background-color: #fff;
-  border: 2px solid #333;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 60px;
-  text-align: center;
-  width: 60px;
-  height: 60px;
-}
-
-.active-square {
-  background-color: #f8b400;
-  border: 2px solid #333;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 60px;
-  text-align: center;
-  width: 60px;
-  height: 60px;
-}
-
-.active-square:hover {
-  background-color: #b5880c;
-}
-
-.score-board {
-  max-width: 300px;
-  margin-top: 20px;
-  margin-bottom: 40px;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f2f2f2;
+  flex-direction: column;
+  align-items: center;
 }
 
 .github-link {

@@ -1,0 +1,25 @@
+.square {
+  background-color: #fff;
+  border: 2px solid #333;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 60px;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+}
+
+.activeSquare {
+  background-color: #f8b400;
+  border: 2px solid #333;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 60px;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+}
+
+.activeSquare:hover {
+  background-color: #b5880c;
+}
