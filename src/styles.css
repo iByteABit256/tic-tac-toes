@@ -52,3 +52,27 @@ h1 {
   top: 20px;
   right: 55px;
 }
+
+.sound-on {
+  background: url(../media/sound-on.png) no-repeat;
+  cursor: pointer;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}
+
+.sound-off {
+  background: url(../media/sound-off.png) no-repeat;
+  cursor: pointer;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+}

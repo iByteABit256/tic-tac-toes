@@ -17,6 +17,11 @@ export default function Game() {
       ["O", 0],
     ]),
   );
+  const [soundEnabled, setSoundEnabled] = useState(true);
+
+  function onSoundButtonClick() {
+    setSoundEnabled(!soundEnabled); 
+  }
 
   // Resets state variables to initial values
   function resetState() {
@@ -99,6 +104,7 @@ export default function Game() {
             onPlay={handlePlay}
             isActive={activeBoards.has(boardIdx)}
             onScoreChange={handleScoreChange}
+            soundEnabled={soundEnabled}
           />
         </div>,
       );
@@ -112,6 +118,10 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
+      <button
+        className={soundEnabled ? "sound-on" : "sound-off"}
+        onClick={onSoundButtonClick}
+      />
       <a
         href="https://github.com/iByteABit256/tic-tac-toes"
         className="github-link"
