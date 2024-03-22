@@ -7,6 +7,8 @@ import StartScreen from "./startpage/startpage";
 
 export default function Game() {
   const [gameStarted, setGameStarted] = useState(false);
+  const [computerOpponentModeEnabled, setComputerOpponentModeEnabled] =
+    useState(false);
   const [turn, setTurn] = useState(0);
   const [boards, setBoards] = useState(Array(9).fill(Array(9).fill(null)));
   const [activeBoards, setActiveBoards] = useState(
@@ -21,12 +23,13 @@ export default function Game() {
   );
   const [soundEnabled, setSoundEnabled] = useState(true);
 
-  function onGameStarted() {
+  function onGameStarted(computerOpponentModeEnabled) {
+    setComputerOpponentModeEnabled(computerOpponentModeEnabled);
     setGameStarted(true);
   }
 
   function onSoundButtonClick() {
-    setSoundEnabled(!soundEnabled); 
+    setSoundEnabled(!soundEnabled);
   }
 
   // Resets state variables to initial values
@@ -42,6 +45,7 @@ export default function Game() {
       ]),
     );
     setGameStarted(false);
+    setComputerOpponentModeEnabled(false);
   }
 
   // Game over logic
@@ -125,7 +129,7 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
-      {!gameStarted && <StartScreen onStart={onGameStarted} />}      
+      {!gameStarted && <StartScreen onStart={onGameStarted} />}
       {gameStarted && (
         <>
           <button

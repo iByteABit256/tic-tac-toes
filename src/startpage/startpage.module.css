@@ -1,7 +1,7 @@
 img {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 30px;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 30px;
 }
 
 .startScreen {
@@ -26,6 +26,7 @@ img {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-bottom: 5px;
 }
 
 .startScreen button:hover {
