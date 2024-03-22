@@ -3,8 +3,10 @@ import About from "./about/about";
 import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
 import { getUnfinishedBoards } from "./utils";
+import StartScreen from "./startpage/startpage";
 
 export default function Game() {
+  const [gameStarted, setGameStarted] = useState(false);
   const [turn, setTurn] = useState(0);
   const [boards, setBoards] = useState(Array(9).fill(Array(9).fill(null)));
   const [activeBoards, setActiveBoards] = useState(
@@ -18,6 +20,10 @@ export default function Game() {
     ]),
   );
   const [soundEnabled, setSoundEnabled] = useState(true);
+
+  function onGameStarted() {
+    setGameStarted(true);
+  }
 
   function onSoundButtonClick() {
     setSoundEnabled(!soundEnabled); 
@@ -35,6 +41,7 @@ export default function Game() {
         ["O", 0],
       ]),
     );
+    setGameStarted(false);
   }
 
   // Game over logic
@@ -118,17 +125,22 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
-      <button
-        className={soundEnabled ? "sound-on" : "sound-off"}
-        onClick={onSoundButtonClick}
-      />
-      <a
-        href="https://github.com/iByteABit256/tic-tac-toes"
-        className="github-link"
-      />
-      <About />
-      <ScoreBoard scores={scores} />
-      {gameRows}
+      {!gameStarted && <StartScreen onStart={onGameStarted} />}      
+      {gameStarted && (
+        <>
+          <button
+            className={soundEnabled ? "sound-on" : "sound-off"}
+            onClick={onSoundButtonClick}
+          />
+          <a
+            href="https://github.com/iByteABit256/tic-tac-toes"
+            className="github-link"
+          />
+          <About />
+          <ScoreBoard scores={scores} />
+          {gameRows}
+        </>
+      )}
     </div>
   );
 }

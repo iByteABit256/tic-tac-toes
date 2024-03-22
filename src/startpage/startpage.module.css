@@ -1,0 +1,33 @@
+img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 30px;
+}
+
+.startScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.startScreen h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.startScreen button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #f8b400;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.startScreen button:hover {
+  background-color: #ffd04f;
+}
