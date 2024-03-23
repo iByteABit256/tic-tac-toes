@@ -61,10 +61,28 @@ function calculateBestMove(
 
   return bestScore;
   */
+  function getRandomNullIndex(array) {
+    let nullIndices = [];
+
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === null) {
+        nullIndices.push(i);
+      }
+    }
+
+    if (nullIndices.length > 0) {
+      let randomIndex =
+        nullIndices[Math.floor(Math.random() * nullIndices.length)];
+      return randomIndex;
+    } else {
+      return -1;
+    }
+  }
+
   const firstAvailableBoardIdx = activeBoards.values().next().value;
   const firstAvailableBoard = boards[firstAvailableBoardIdx];
-  const firstAvailableSquare = firstAvailableBoard.indexOf(null);
-  return [firstAvailableBoardIdx, firstAvailableSquare];
+  const squareToPlay = getRandomNullIndex(firstAvailableBoard);
+  return [firstAvailableBoardIdx, squareToPlay];
 }
 
 export function makeAIMove(boards, activeBoards) {
