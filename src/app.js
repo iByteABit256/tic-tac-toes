@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import About from "./about/about";
 import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
 import { getUnfinishedBoards } from "./utils";
 import StartScreen from "./startpage/startpage";
+import { makeAIMove, simulateAIMove } from "./ai/ai";
 
 export default function Game() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -47,6 +48,14 @@ export default function Game() {
     setGameStarted(false);
     setComputerOpponentModeEnabled(false);
   }
+
+  useEffect(() => {
+    // AI's turn
+    if (computerOpponentModeEnabled && turn % 2 === 1) {
+      const aiMove = makeAIMove(boards, activeBoards);
+      simulateAIMove(aiMove);
+    }
+  }, [turn, boards, activeBoards]);
 
   // Game over logic
   function gameOver() {
@@ -108,7 +117,7 @@ export default function Game() {
       gameRow.push(
         <div className="game-board">
           <Board
-            key={`game-board-${i}-${j}`}
+            key={`game-board-${boardIdx}`}
             turn={turn}
             boardNum={boardIdx}
             squares={boards[boardIdx]}
