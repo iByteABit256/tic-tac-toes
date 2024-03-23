@@ -8,7 +8,7 @@ import App from "./app";
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
-    <Favicon url="./favicon.ico"/>
+    <Favicon url="./favicon.ico" />
     <App />
   </StrictMode>,
 );

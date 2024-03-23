@@ -76,10 +76,12 @@ export default function Board({
 
     for (let j = 0; j < 3; j++) {
       const square = i * 3 + j;
+      const key = `board-${boardNum}-square-${square}`;
 
       boardRow.push(
         <Square
-          key={`board-${boardNum}-square-${i}-${j}`}
+          key={key}
+          id={key}
           value={squares[square]}
           onSquareClick={() => handleClick(square)}
           isActive={isActive}
