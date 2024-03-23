@@ -1,4 +1,4 @@
-import { simulateClick, TotalScores, calculateTotalScores } from "../utils";
+import { simulateClick, calculateTotalScores } from "../utils";
 
 // Finds best move with Minmax and returns a [boardIdx, squareIdx] pair
 function calculateBestMove(
@@ -33,9 +33,11 @@ function calculateBestMove(
 
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
+        const newBoards = [...boards];
         const newBoard = [...board];
         newBoard[i] = player;
-        const score = calculateBestMove(newBoard, !maximizingPlayer, depth + 1, alpha, beta);
+        newBoards[boardIdx] = newBoard;
+        const score = calculateBestMove(newBoards, activeBoards, !maximizingPlayer, depth + 1, alpha, beta);
 
         if (maximizingPlayer) {
           if (score > bestScore) {
