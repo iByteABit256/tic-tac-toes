@@ -2,7 +2,6 @@ import {
   simulateClick,
   calculateTotalScores,
   getUnfinishedBoards,
-  gamePrettyPrint,
 } from "../utils";
 
 // Finds best move with Minimax and returns a [boardIdx, squareIdx] pair
@@ -24,11 +23,9 @@ export function calculateBestMove(
     const scoreDiff = scoreO[1] - scoreX[1];
     const diffNormalized = scoreDiff * (gameIsFinished ? 10000 : 100);
     if (scoreDiff === 0) {
-      console.log("Returning 0");
       return 0;
     } else {
       const depthCoefficient = diffNormalized > 0 ? -depth : depth;
-      console.log(`Returning ${diffNormalized + depthCoefficient}`);
       return diffNormalized + depthCoefficient;
     }
   }
