@@ -1,25 +1,35 @@
-import { simulateClick, calculateTotalScores } from "../utils";
+import {
+  simulateClick,
+  calculateTotalScores,
+  getUnfinishedBoards,
+  gamePrettyPrint,
+} from "../utils";
 
-// Finds best move with Minmax and returns a [boardIdx, squareIdx] pair
-function calculateBestMove(
+// Finds best move with Minimax and returns a [boardIdx, squareIdx] pair
+export function calculateBestMove(
   boards,
   activeBoards,
   maximizingPlayer,
   depth = 0,
+  maxDepth = 7,
   alpha = -Infinity,
   beta = Infinity,
 ) {
-  const totalScores = calculateTotalScores(boards); 
-  const gameIsFinished = totalScores.gameIsFinished;
+  const totalScores = calculateTotalScores(boards);
+  const gamesEnded = totalScores.gamesEnded;
+  const gameIsFinished = gamesEnded === 9;
   const [scoreX, scoreO] = totalScores.scores;
-  
-  if (gameIsFinished) {
-    if (scoreX[1] === scoreO[1]) {
+
+  if (gameIsFinished || depth === maxDepth) {
+    const scoreDiff = scoreO[1] - scoreX[1];
+    const diffNormalized = scoreDiff * (gameIsFinished ? 10000 : 100);
+    if (scoreDiff === 0) {
+      console.log("Returning 0");
       return 0;
-    } else if (scoreX[1] > scoreO[1]) {
-      return depth - 100;
     } else {
-      return 100 - depth;
+      const depthCoefficient = diffNormalized > 0 ? -depth : depth;
+      console.log(`Returning ${diffNormalized + depthCoefficient}`);
+      return diffNormalized + depthCoefficient;
     }
   }
 
@@ -37,7 +47,26 @@ function calculateBestMove(
         const newBoard = [...board];
         newBoard[i] = player;
         newBoards[boardIdx] = newBoard;
-        const score = calculateBestMove(newBoards, activeBoards, !maximizingPlayer, depth + 1, alpha, beta);
+
+        const unfinishedBoards = getUnfinishedBoards(gamesEnded);
+
+        // If next board has ended, start on any unfinished board
+        let newActiveBoards;
+        if (gamesEnded.has(i)) {
+          newActiveBoards = unfinishedBoards;
+        } else {
+          newActiveBoards = new Set([i]);
+        }
+
+        const score = calculateBestMove(
+          newBoards,
+          newActiveBoards,
+          !maximizingPlayer,
+          depth + 1,
+          maxDepth,
+          alpha,
+          beta,
+        );
 
         if (maximizingPlayer) {
           if (score > bestScore) {
@@ -68,9 +97,8 @@ function calculateBestMove(
   return bestScore;
 }
 
-export function makeAIMove(boards, activeBoards) {
-  const bestMove = calculateBestMove(boards, activeBoards, true);
-  return bestMove;
+export function makeAIMove(boards, activeBoards, maxDepth = 5) {
+  return calculateBestMove(boards, activeBoards, true, 0, maxDepth);
 }
 
 export function simulateAIMove(aiMove) {
