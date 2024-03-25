@@ -1,26 +1,36 @@
-import { simulateClick } from "../utils";
+import {
+  simulateClick,
+  calculateTotalScores,
+  getUnfinishedBoards,
+  gamePrettyPrint,
+} from "../utils";
 
-function calculateBestMove(
+// Finds best move with Minimax and returns a [boardIdx, squareIdx] pair
+export function calculateBestMove(
   boards,
   activeBoards,
   maximizingPlayer,
   depth = 0,
+  maxDepth = 7,
   alpha = -Infinity,
   beta = Infinity,
 ) {
-  /*
-  TODO: This is very far from finished
+  const totalScores = calculateTotalScores(boards);
+  const gamesEnded = totalScores.gamesEnded;
+  const gameIsFinished = gamesEnded === 9;
+  const [scoreX, scoreO] = totalScores.scores;
 
-  const winner = calculateWinner(board);
-
-  if (winner !== null) {
-    // If the game is over, return the evaluation score
-    return winner === "O" ? 10 - depth : depth - 10;
-  }
-
-  if (boardIsFilled(board)) {
-    // If the game is a draw, return neutral score
-    return 0;
+  if (gameIsFinished || depth === maxDepth) {
+    const scoreDiff = scoreO[1] - scoreX[1];
+    const diffNormalized = scoreDiff * (gameIsFinished ? 10000 : 100);
+    if (scoreDiff === 0) {
+      console.log("Returning 0");
+      return 0;
+    } else {
+      const depthCoefficient = diffNormalized > 0 ? -depth : depth;
+      console.log(`Returning ${diffNormalized + depthCoefficient}`);
+      return diffNormalized + depthCoefficient;
+    }
   }
 
   let bestScore = maximizingPlayer ? -Infinity : Infinity;
@@ -28,66 +38,67 @@ function calculateBestMove(
 
   const player = maximizingPlayer ? "O" : "X";
 
-  for (let i = 0; i < 9; i++) {
-    if (!board[i]) {
-      const newBoard = [...board];
-      newBoard[i] = player;
-      const score = calculateBestMove(newBoard, !maximizingPlayer, depth + 1, alpha, beta);
+  activeBoards.forEach((boardIdx) => {
+    const board = boards[boardIdx];
 
-      if (maximizingPlayer) {
-        if (score > bestScore) {
-          bestScore = score;
-          bestMove = i;
-        }
-        alpha = Math.max(alpha, score);
-      } else {
-        if (score < bestScore) {
-          bestScore = score;
-          bestMove = i;
-        }
-        beta = Math.min(beta, score);
-      }
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        const newBoards = [...boards];
+        const newBoard = [...board];
+        newBoard[i] = player;
+        newBoards[boardIdx] = newBoard;
 
-      if (beta <= alpha) {
-        // Alpha-beta pruning
-        break;
+        const unfinishedBoards = getUnfinishedBoards(gamesEnded);
+
+        // If next board has ended, start on any unfinished board
+        let newActiveBoards;
+        if (gamesEnded.has(i)) {
+          newActiveBoards = unfinishedBoards;
+        } else {
+          newActiveBoards = new Set([i]);
+        }
+
+        const score = calculateBestMove(
+          newBoards,
+          newActiveBoards,
+          !maximizingPlayer,
+          depth + 1,
+          maxDepth,
+          alpha,
+          beta,
+        );
+
+        if (maximizingPlayer) {
+          if (score > bestScore) {
+            bestScore = score;
+            bestMove = [boardIdx, i];
+          }
+          alpha = Math.max(alpha, score);
+        } else {
+          if (score < bestScore) {
+            bestScore = score;
+            bestMove = [boardIdx, i];
+          }
+          beta = Math.min(beta, score);
+        }
+
+        if (beta <= alpha) {
+          // Alpha-beta pruning
+          break;
+        }
       }
     }
-  }
+  });
 
   if (depth === 0) {
     return bestMove;
   }
 
   return bestScore;
-  */
-  function getRandomNullIndex(array) {
-    let nullIndices = [];
-
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] === null) {
-        nullIndices.push(i);
-      }
-    }
-
-    if (nullIndices.length > 0) {
-      let randomIndex =
-        nullIndices[Math.floor(Math.random() * nullIndices.length)];
-      return randomIndex;
-    } else {
-      return -1;
-    }
-  }
-
-  const firstAvailableBoardIdx = activeBoards.values().next().value;
-  const firstAvailableBoard = boards[firstAvailableBoardIdx];
-  const squareToPlay = getRandomNullIndex(firstAvailableBoard);
-  return [firstAvailableBoardIdx, squareToPlay];
 }
 
-export function makeAIMove(boards, activeBoards) {
-  const bestMove = calculateBestMove(boards, activeBoards, true);
-  return bestMove;
+export function makeAIMove(boards, activeBoards, maxDepth = 5) {
+  return calculateBestMove(boards, activeBoards, true, 0, maxDepth);
 }
 
 export function simulateAIMove(aiMove) {

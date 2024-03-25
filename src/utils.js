@@ -20,6 +20,42 @@ export function calculateWinner(squares) {
   return null;
 }
 
+export class TotalScores {
+  scores;
+  gamesEnded;
+
+  constructor(scores, gamesEnded) {
+    this.scores = scores;
+    this.gamesEnded = gamesEnded;
+  }
+}
+
+export function calculateTotalScores(boards) {
+  let gamesEnded = new Set();
+  let scores = new Map([
+    ["X", 0],
+    ["O", 0],
+  ]);
+
+  for (let i = 0; i < 9; i++) {
+    const board = boards[i];
+    const winner = calculateWinner(board);
+    const isDraw = !winner && boardIsFilled(board);
+
+    if (winner) {
+      scores.set(winner, scores.get(winner) + 1);
+      gamesEnded.add(i);
+    }
+
+    if (isDraw) {
+      scores = new Map(Array.from(scores, ([key, value]) => [key, value + 1]));
+      gamesEnded.add(i);
+    }
+  }
+
+  return new TotalScores(scores, gamesEnded);
+}
+
 export function boardIsFilled(squares) {
   return !squares.some((square) => square === null);
 }
@@ -42,4 +78,27 @@ export function simulateClick(element) {
     view: window,
   });
   element.dispatchEvent(clickEvent);
+}
+
+export function gamePrettyPrint(boards) {
+  let gameStr = "";
+  for (let i = 0; i < 9; i++) {
+    gameStr += `Board ${i}:\n`;
+    gameStr += boardPrettyPrint(boards[i]) + "\n";
+  }
+
+  return gameStr;
+}
+
+export function boardPrettyPrint(board) {
+  let boardStr = "";
+  for (let i = 0; i < 3; i++) {
+    boardStr += "| ";
+    for (let j = 0; j < 3; j++) {
+      boardStr += board[i * 3 + j] + " | ";
+    }
+    boardStr += "\n";
+  }
+
+  return boardStr;
 }
