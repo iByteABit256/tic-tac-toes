@@ -16,7 +16,7 @@ export function calculateBestMove(
 ) {
   const totalScores = calculateTotalScores(boards);
   const gamesEnded = totalScores.gamesEnded;
-  const gameIsFinished = gamesEnded === 9;
+  const gameIsFinished = gamesEnded.size === 9;
   const [scoreX, scoreO] = totalScores.scores;
 
   if (gameIsFinished || depth === maxDepth) {
