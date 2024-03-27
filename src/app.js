@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { getUnfinishedBoards } from "./utils";
+import { getOpponentSymbol, getUnfinishedBoards } from "./utils";
 import { makeAIMove, simulateAIMove } from "./ai/ai";
 import About from "./about/about";
 import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
 import StartScreen from "./startpage/startpage";
+import EndScreen from "./endgame/endgame";
 
 export class GameStartProperties {
   computerOpponentModeEnabled;
@@ -27,6 +28,7 @@ export class GameStartProperties {
 
 export default function Game() {
   const [gameStarted, setGameStarted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [playerSymbol, setPlayerSymbol] = useState("X");
   const [opponentSymbol, setOpponentSymbol] = useState("O");
   const [difficulty, setDifficulty] = useState(5);
@@ -74,6 +76,7 @@ export default function Game() {
       ]),
     );
     setGameStarted(false);
+    setGameOver(false);
     setComputerOpponentModeEnabled(false);
     setPlayerSymbol("X");
     setPlayerSymbol("O");
@@ -85,7 +88,7 @@ export default function Game() {
     const isAiTurn = playerSymbol === "X" ? turn % 2 === 1 : turn % 2 === 0;
 
     // AI's turn
-    if (computerOpponentModeEnabled && isAiTurn) {
+    if (computerOpponentModeEnabled && isAiTurn && !gameOver) {
       const aiMove = makeAIMove(
         playerSymbol,
         opponentSymbol,
@@ -96,21 +99,6 @@ export default function Game() {
       simulateAIMove(aiMove);
     }
   }, [gameStarted, turn, boards, activeBoards]);
-
-  // Game over logic
-  function gameOver() {
-    const [scoreA, scoreB] = scores;
-
-    if (scoreA[1] === scoreB[1]) {
-      alert("Draw!");
-    } else if (scoreA[1] > scoreB[1]) {
-      alert(`Player ${scoreA[0]} has won with a score of ${scoreA[1]}!`);
-    } else {
-      alert(`Player ${scoreB[0]} has won with a score of ${scoreB[1]}!`);
-    }
-
-    resetState();
-  }
 
   // Handles a player move
   function handlePlay(boardNum, nextSquares, squareChanged) {
@@ -123,8 +111,7 @@ export default function Game() {
 
     // Game has ended
     if (unfinishedBoards.size === 0) {
-      gameOver();
-      return;
+      setGameOver(true);
     }
 
     // If next board has ended, start on any unfinished board
@@ -179,7 +166,7 @@ export default function Game() {
   return (
     <div key="Game" className="game">
       {!gameStarted && <StartScreen onStart={onGameStarted} />}
-      {gameStarted && (
+      {gameStarted && !gameOver && (
         <>
           <button
             className={soundEnabled ? "sound-on" : "sound-off"}
@@ -194,6 +181,7 @@ export default function Game() {
           {gameRows}
         </>
       )}
+      {gameOver && <EndScreen scores={scores} onRestart={resetState} />}
     </div>
   );
 }
