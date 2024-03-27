@@ -1,17 +1,14 @@
 import styles from "./startpage.module.css";
 import logo from "../media/logo.png";
+import { GameStartProperties } from "../app";
 import { useState } from "react";
 import { getRandomInt, getOpponentSymbol } from "../utils";
 
 export default function StartScreen({ onStart }) {
   const [aiModeSelected, setAiModeSelected] = useState(false);
-  const aiPropKey = "computerOpponentModeEnabled";
-  const playerSymbolKey = "playerSymbol";
-  const opponentSymbolKey = "opponentSymbol";
-  const difficultyKey = "difficulty";
 
   function createMultiplayerGame() {
-    const props = new Map([[aiPropKey, false]]);
+    const props = new GameStartProperties(true, null, null, null);
     onStart(props);
   }
 
@@ -20,12 +17,12 @@ export default function StartScreen({ onStart }) {
   }
 
   function createAiGame(playerSymbol = randomSymbol(), difficulty = 5) {
-    const props = new Map([
-      [aiPropKey, true],
-      [playerSymbolKey, playerSymbol],
-      [opponentSymbolKey, getOpponentSymbol(playerSymbol)],
-      [difficultyKey, difficulty],
-    ]);
+    const props = new GameStartProperties(
+      true,
+      playerSymbol,
+      getOpponentSymbol(playerSymbol),
+      difficulty,
+    );
     onStart(props);
   }
 

@@ -6,6 +6,25 @@ import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
 import StartScreen from "./startpage/startpage";
 
+export class GameStartProperties {
+  computerOpponentModeEnabled;
+  playerSymbol;
+  opponentSymbol;
+  difficulty;
+
+  constructor(
+    computerOpponentModeEnabled,
+    playerSymbol,
+    opponentSymbol,
+    difficulty,
+  ) {
+    this.computerOpponentModeEnabled = computerOpponentModeEnabled;
+    this.playerSymbol = playerSymbol;
+    this.opponentSymbol = opponentSymbol;
+    this.difficulty = difficulty;
+  }
+}
+
 export default function Game() {
   const [gameStarted, setGameStarted] = useState(false);
   const [playerSymbol, setPlayerSymbol] = useState("X");
@@ -29,17 +48,11 @@ export default function Game() {
 
   // Called by startpage to begin the game
   function onGameStarted(props) {
-    const computerOpponentModeEnabled = props.get(
-      "computerOpponentModeEnabled",
-    );
-    if (computerOpponentModeEnabled) {
-      const playerSymbol = props.get("playerSymbol");
-      const opponentSymbol = props.get("opponentSymbol");
-      const difficulty = props.get("difficulty");
-      setPlayerSymbol(playerSymbol);
-      setOpponentSymbol(opponentSymbol);
-      setDifficulty(difficulty);
-      setComputerOpponentModeEnabled(computerOpponentModeEnabled);
+    if (props.computerOpponentModeEnabled) {
+      setPlayerSymbol(props.playerSymbol);
+      setOpponentSymbol(props.opponentSymbol);
+      setDifficulty(props.difficulty);
+      setComputerOpponentModeEnabled(props.computerOpponentModeEnabled);
     }
     setGameStarted(true);
   }
