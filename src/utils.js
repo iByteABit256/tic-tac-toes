@@ -1,3 +1,11 @@
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+export function getOpponentSymbol(playerSymbol) {
+  return playerSymbol === "X" ? "O" : "X";
+}
+
 export function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],

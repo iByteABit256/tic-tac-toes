@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
+import { getUnfinishedBoards } from "./utils";
+import { makeAIMove, simulateAIMove } from "./ai/ai";
 import About from "./about/about";
 import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
-import { getUnfinishedBoards } from "./utils";
 import StartScreen from "./startpage/startpage";
-import { makeAIMove, simulateAIMove } from "./ai/ai";
 
 export default function Game() {
   const [gameStarted, setGameStarted] = useState(false);
+  const [playerSymbol, setPlayerSymbol] = useState("X");
+  const [opponentSymbol, setOpponentSymbol] = useState("O");
+  const [difficulty, setDifficulty] = useState(5);
   const [computerOpponentModeEnabled, setComputerOpponentModeEnabled] =
     useState(false);
   const [turn, setTurn] = useState(0);
@@ -24,8 +27,20 @@ export default function Game() {
   );
   const [soundEnabled, setSoundEnabled] = useState(true);
 
-  function onGameStarted(computerOpponentModeEnabled) {
-    setComputerOpponentModeEnabled(computerOpponentModeEnabled);
+  // Called by startpage to begin the game
+  function onGameStarted(props) {
+    const computerOpponentModeEnabled = props.get(
+      "computerOpponentModeEnabled",
+    );
+    if (computerOpponentModeEnabled) {
+      const playerSymbol = props.get("playerSymbol");
+      const opponentSymbol = props.get("opponentSymbol");
+      const difficulty = props.get("difficulty");
+      setPlayerSymbol(playerSymbol);
+      setOpponentSymbol(opponentSymbol);
+      setDifficulty(difficulty);
+      setComputerOpponentModeEnabled(computerOpponentModeEnabled);
+    }
     setGameStarted(true);
   }
 
@@ -47,15 +62,27 @@ export default function Game() {
     );
     setGameStarted(false);
     setComputerOpponentModeEnabled(false);
+    setPlayerSymbol("X");
+    setPlayerSymbol("O");
+    setDifficulty(5);
   }
 
   useEffect(() => {
+    // X always plays first
+    const isAiTurn = playerSymbol === "X" ? turn % 2 === 1 : turn % 2 === 0;
+
     // AI's turn
-    if (computerOpponentModeEnabled && turn % 2 === 1) {
-      const aiMove = makeAIMove(boards, activeBoards);
+    if (computerOpponentModeEnabled && isAiTurn) {
+      const aiMove = makeAIMove(
+        playerSymbol,
+        opponentSymbol,
+        boards,
+        activeBoards,
+        difficulty,
+      );
       simulateAIMove(aiMove);
     }
-  }, [turn, boards, activeBoards]);
+  }, [gameStarted, turn, boards, activeBoards]);
 
   // Game over logic
   function gameOver() {

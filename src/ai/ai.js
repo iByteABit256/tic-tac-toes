@@ -6,6 +6,8 @@ import {
 
 // Finds best move with Minimax and returns a [boardIdx, squareIdx] pair
 export function calculateBestMove(
+  playerSymbol,
+  opponentSymbol,
   boards,
   activeBoards,
   maximizingPlayer,
@@ -20,7 +22,8 @@ export function calculateBestMove(
   const [scoreX, scoreO] = totalScores.scores;
 
   if (gameIsFinished || depth === maxDepth) {
-    const scoreDiff = scoreO[1] - scoreX[1];
+    const scoreDiff =
+      playerSymbol === "X" ? scoreO[1] - scoreX[1] : scoreX[1] - scoreO[1];
     const diffNormalized = scoreDiff * (gameIsFinished ? 10000 : 100);
     if (scoreDiff === 0) {
       return 0;
@@ -33,7 +36,7 @@ export function calculateBestMove(
   let bestScore = maximizingPlayer ? -Infinity : Infinity;
   let bestMove = null;
 
-  const player = maximizingPlayer ? "O" : "X";
+  const player = maximizingPlayer ? opponentSymbol : playerSymbol;
 
   activeBoards.forEach((boardIdx) => {
     const board = boards[boardIdx];
@@ -56,6 +59,8 @@ export function calculateBestMove(
         }
 
         const score = calculateBestMove(
+          playerSymbol,
+          opponentSymbol,
           newBoards,
           newActiveBoards,
           !maximizingPlayer,
@@ -94,8 +99,22 @@ export function calculateBestMove(
   return bestScore;
 }
 
-export function makeAIMove(boards, activeBoards, maxDepth = 5) {
-  return calculateBestMove(boards, activeBoards, true, 0, maxDepth);
+export function makeAIMove(
+  playerSymbol,
+  opponentSymbol,
+  boards,
+  activeBoards,
+  maxDepth,
+) {
+  return calculateBestMove(
+    playerSymbol,
+    opponentSymbol,
+    boards,
+    activeBoards,
+    true,
+    0,
+    maxDepth,
+  );
 }
 
 export function simulateAIMove(aiMove) {

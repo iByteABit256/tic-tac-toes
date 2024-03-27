@@ -32,3 +32,16 @@ img {
 .startScreen button:hover {
   background-color: #ffd04f;
 }
+
+.horizontalButtonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.horizontalButtonsContainer button {
+  margin-right: 10px;
+}
+
+.horizontalButtonsContainer button:last-child {
+  margin-right: 0;
+}

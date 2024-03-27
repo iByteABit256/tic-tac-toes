@@ -21,7 +21,15 @@ const mockActiveBoards = new Set([0]); // Assuming the first board is active
 
 describe("calculateBestMove", () => {
   it("should return a valid move", () => {
-    const move = calculateBestMove(mockBoards, mockActiveBoards, true, 0, 2);
+    const move = calculateBestMove(
+      "X",
+      "O",
+      mockBoards,
+      mockActiveBoards,
+      true,
+      0,
+      2,
+    );
 
     // Ensure that the move is an array with two elements: [boardIndex, squareIndex]
     expect(Array.isArray(move)).toBe(true);
@@ -35,7 +43,15 @@ describe("calculateBestMove", () => {
   });
 
   it("should choose a move that wins a board", () => {
-    const move = calculateBestMove(mockBoards, mockActiveBoards, true, 0, 2);
+    const move = calculateBestMove(
+      "X",
+      "O",
+      mockBoards,
+      mockActiveBoards,
+      true,
+      0,
+      2,
+    );
     expect(move).toEqual([0, 2]);
   });
 
@@ -53,7 +69,15 @@ describe("calculateBestMove", () => {
     ];
     const mockActiveBoards = new Set([0]);
 
-    const move = calculateBestMove(mockBoards, mockActiveBoards, true, 0, 2);
+    const move = calculateBestMove(
+      "X",
+      "O",
+      mockBoards,
+      mockActiveBoards,
+      true,
+      0,
+      2,
+    );
     expect(move).toEqual([0, 6]);
   });
 
@@ -71,7 +95,15 @@ describe("calculateBestMove", () => {
     ];
     const mockActiveBoards = new Set([0]);
 
-    const move = calculateBestMove(mockBoards, mockActiveBoards, true, 0, 2);
+    const move = calculateBestMove(
+      "X",
+      "O",
+      mockBoards,
+      mockActiveBoards,
+      true,
+      0,
+      2,
+    );
     expect(move).toEqual([0, 6]);
   });
 });
