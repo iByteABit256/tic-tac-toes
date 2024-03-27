@@ -1,0 +1,48 @@
+.endScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.endScreen h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.endScreen h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.endScreen p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.endScreen .winnerHighlight {
+  font-weight: bold;
+  color: green;
+}
+
+.endScreen .loserHighlight {
+  font-weight: bold;
+  color: red;
+}
+
+.endScreen .restartButton {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #f8b400;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 2rem;
+}
+
+.endScreen .restartButton:hover {
+  background-color: #ffd04f;
+}
