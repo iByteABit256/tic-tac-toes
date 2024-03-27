@@ -8,12 +8,13 @@ export default function StartScreen({ onStart }) {
   const [aiModeSelected, setAiModeSelected] = useState(false);
 
   function createMultiplayerGame() {
-    const props = new GameStartProperties(true, null, null, null);
+    const props = new GameStartProperties(false, null, null, null);
     onStart(props);
   }
 
   function randomSymbol() {
-    return getRandomInt(2) === 0 ? "X" : "O";
+    const randomPlayer = getRandomInt(2);
+    return randomPlayer === 0 ? "X" : "O";
   }
 
   function createAiGame(playerSymbol = randomSymbol(), difficulty = 5) {
