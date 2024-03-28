@@ -165,6 +165,11 @@ export default function Game() {
 
   return (
     <div key="Game" className="game">
+      <a
+        href="https://github.com/iByteABit256/tic-tac-toes"
+        className="github-link"
+      />
+      <About />
       {!gameStarted && <StartScreen onStart={onGameStarted} />}
       {gameStarted && !gameOver && (
         <>
@@ -172,11 +177,6 @@ export default function Game() {
             className={soundEnabled ? "sound-on" : "sound-off"}
             onClick={onSoundButtonClick}
           />
-          <a
-            href="https://github.com/iByteABit256/tic-tac-toes"
-            className="github-link"
-          />
-          <About />
           <ScoreBoard scores={scores} />
           {gameRows}
         </>
