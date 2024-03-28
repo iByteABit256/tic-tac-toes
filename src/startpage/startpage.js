@@ -42,8 +42,8 @@ export default function StartScreen({ onStart }) {
       {aiModeSelected && (
         <>
           <div className={styles.horizontalButtonsContainer}>
-            <button onClick={() => createAiGame("X")}>Play as X</button>
-            <button onClick={() => createAiGame("O")}>Play as O</button>
+            <button onClick={() => createAiGame("X")}>Play first (X)</button>
+            <button onClick={() => createAiGame("O")}>Play second (O)</button>
             <button onClick={() => createAiGame()}>Random</button>
           </div>
           <button onClick={() => setAiModeSelected(false)}>Back</button>
