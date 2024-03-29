@@ -1,6 +1,6 @@
 # Tic Tac Toes
 
-<img src="media/tic-tac-toes-screenshot.png" width="400" height="500">
+<img src="media/tic-tac-toes-screenshot.png" width="350" height="500">
 
 <br>
 
