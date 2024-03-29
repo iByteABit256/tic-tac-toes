@@ -56,8 +56,8 @@ export default function StartScreen({ onStart }) {
       <img src={logo} alt="Logo" />
       {!aiModeSelected && !onlineModeSelected && (
         <>
-          <button onClick={() => setOnlineModeSelected(true)}>Play Online</button>
           <button onClick={() => createMultiplayerGame()}>Play</button>
+          <button onClick={() => setOnlineModeSelected(true)}>Play Online</button>
           <button onClick={() => setAiModeSelected(true)}>
             Play with Computer
           </button>
@@ -84,7 +84,7 @@ export default function StartScreen({ onStart }) {
         <>
           <input
             type="text"
-            placeholder="Enter Game ID"
+            placeholder="Enter Opponent's ID"
             onChange={(e) => setJoinId(e.target.value)}
             style={{ marginBottom: "10px" }}
           />

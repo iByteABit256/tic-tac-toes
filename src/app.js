@@ -65,36 +65,70 @@ export default function Game() {
   // Called by startpage to begin the game
   function onGameStarted(props) {
     if (props.online) {
+      // State variables for online mode
       setOnline(true);
       setJoinId(props.joinId);
+      setPlayerSymbol(props.playerSymbol);
+      setOpponentSymbol(props.opponentSymbol);
+
+      // Create peer connection
       var tempPeer = new Peer();
       setPeer(tempPeer);
       tempPeer.on("open", (id) => {
+        setGameStarted(true); 
         console.log("My ID: " + id);
         setPeerId(id);
 
+        // Join game
         if (props.joinId != null) {
           console.log("connecting to opponent with ID: " + props.joinId);
-          setPeerConnection(tempPeer.connect(props.joinId));
-        } else {
+          var conn = tempPeer.connect(props.joinId);
+          setPeerConnection(conn);
+          setupListener(conn);
+        } 
+        // Create game
+        else {
           console.log("waiting for opponent...");
           tempPeer.on("connection", function(conn) {
-            console.log("Connected to opponent with ID: " + conn.peer);
+            console.log("connected to opponent with ID: " + conn.peer);
             setPeerConnection(conn);
+            setupListener(conn);
           });
         }
       });
-    } else if (props.computerOpponentModeEnabled) {
+    } 
+    // Computer opponent
+    else if (props.computerOpponentModeEnabled) {
       setPlayerSymbol(props.playerSymbol);
       setOpponentSymbol(props.opponentSymbol);
       setDifficulty(props.difficulty);
       setComputerOpponentModeEnabled(props.computerOpponentModeEnabled);
+      setGameStarted(true);
+    } 
+    // Local multiplayer
+    else {
+      setGameStarted(true);
     }
-    setGameStarted(true);
+  }
+
+  function setupListener(conn) {
+    conn.on("data", function(data) {
+      console.log("Received data: " + data);
+      // if (!gameStarted || gameOver || isItMyTurn(playerSymbol)) {
+      //   return;
+      // }
+
+      const [boardNum, squareChanged] = JSON.parse(data);
+      simulateAIMove([boardNum, squareChanged]);
+    });
   }
 
   function onSoundButtonClick() {
     setSoundEnabled(!soundEnabled);
+  }
+
+  function isItMyTurn(playerSymbol) {
+    return joinId == null || playerSymbol === "X" ? turn % 2 === 0 : turn % 2 === 1;
   }
 
   // Resets state variables to initial values
@@ -136,6 +170,23 @@ export default function Game() {
 
   // Handles a player move
   function handlePlay(boardNum, nextSquares, squareChanged) {
+    // online and no connection
+    if (online && !peerConnection) {
+      return;
+    }
+
+    // // other player's turn
+    // if (online && !receivedMove && peerConnection && !isItMyTurn(playerSymbol)) {
+    //   return;
+    // }
+
+    // send move to opponent
+    if (online && peerConnection) {
+      peerConnection.send(JSON.stringify([boardNum, squareChanged]));
+    }
+
+    console.log("handlePlay: " + boardNum + " " + squareChanged);
+
     const nextBoards = boards.slice();
     nextBoards[boardNum] = nextSquares;
     setBoards(nextBoards);
@@ -144,6 +195,12 @@ export default function Game() {
     const unfinishedBoards = getUnfinishedBoards(gamesEnded);
 
     // Game has ended
+    if (online && peerConnection && unfinishedBoards.size === 0) {
+      peerConnection.close();
+      setPeerConnection(null);
+      setJoinId(null);
+      setOnline(false);
+    }
     if (unfinishedBoards.size === 0) {
       setGameOver(true);
     }
@@ -213,10 +270,18 @@ export default function Game() {
           />
           {online && (
             <div className="online-info">
-              <p>Your ID: {peerId}</p>
+              <p onClick={() => navigator.clipboard.writeText(peerId)}>
+                Your ID: {peerId}
+              </p>
+              {peerConnection && (
+                isItMyTurn(playerSymbol) ? 
+                <p>Your turn</p> : 
+                <p>Opponent's turn</p>
+              )}
               {!peerConnection && <p>Waiting for opponent...</p>}
             </div>
           )}
+          
           <ScoreBoard scores={scores} />
           {gameRows}
         </>
