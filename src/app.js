@@ -6,23 +6,30 @@ import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
 import StartScreen from "./startpage/startpage";
 import EndScreen from "./endgame/endgame";
+import Peer from "peerjs";
 
 export class GameStartProperties {
   computerOpponentModeEnabled;
   playerSymbol;
   opponentSymbol;
   difficulty;
+  online;
+  joinId;
 
   constructor(
     computerOpponentModeEnabled,
     playerSymbol,
     opponentSymbol,
     difficulty,
+    online = false,
+    joinId = null,
   ) {
     this.computerOpponentModeEnabled = computerOpponentModeEnabled;
     this.playerSymbol = playerSymbol;
     this.opponentSymbol = opponentSymbol;
     this.difficulty = difficulty;
+    this.online = online;
+    this.joinId = joinId;
   }
 }
 
@@ -47,10 +54,37 @@ export default function Game() {
     ]),
   );
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [online, setOnline] = useState(false);
+  const [joinId, setJoinId] = useState(null);
+
+  // peerjs
+  const [peer, setPeer] = useState(null);
+  const [peerConnection, setPeerConnection] = useState(null);
+  const [peerId, setPeerId] = useState(null);
 
   // Called by startpage to begin the game
   function onGameStarted(props) {
-    if (props.computerOpponentModeEnabled) {
+    if (props.online) {
+      setOnline(true);
+      setJoinId(props.joinId);
+      var tempPeer = new Peer();
+      setPeer(tempPeer);
+      tempPeer.on("open", (id) => {
+        console.log("My ID: " + id);
+        setPeerId(id);
+
+        if (props.joinId != null) {
+          console.log("connecting to opponent with ID: " + props.joinId);
+          setPeerConnection(tempPeer.connect(props.joinId));
+        } else {
+          console.log("waiting for opponent...");
+          tempPeer.on("connection", function(conn) {
+            console.log("Connected to opponent with ID: " + conn.peer);
+            setPeerConnection(conn);
+          });
+        }
+      });
+    } else if (props.computerOpponentModeEnabled) {
       setPlayerSymbol(props.playerSymbol);
       setOpponentSymbol(props.opponentSymbol);
       setDifficulty(props.difficulty);
@@ -177,6 +211,12 @@ export default function Game() {
             className={soundEnabled ? "sound-on" : "sound-off"}
             onClick={onSoundButtonClick}
           />
+          {online && (
+            <div className="online-info">
+              <p>Your ID: {peerId}</p>
+              {!peerConnection && <p>Waiting for opponent...</p>}
+            </div>
+          )}
           <ScoreBoard scores={scores} />
           {gameRows}
         </>

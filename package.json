@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "peerjs": "^1.5.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-favicon": "^2.0.3",
