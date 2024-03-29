@@ -65,37 +65,7 @@ export default function Game() {
   // Called by startpage to begin the game
   function onGameStarted(props) {
     if (props.online) {
-      // State variables for online mode
-      setOnline(true);
-      setJoinId(props.joinId);
-      setPlayerSymbol(props.playerSymbol);
-      setOpponentSymbol(props.opponentSymbol);
-
-      // Create peer connection
-      var tempPeer = new Peer();
-      setPeer(tempPeer);
-      tempPeer.on("open", (id) => {
-        setGameStarted(true); 
-        console.log("My ID: " + id);
-        setPeerId(id);
-
-        // Join game
-        if (props.joinId != null) {
-          console.log("connecting to opponent with ID: " + props.joinId);
-          var conn = tempPeer.connect(props.joinId);
-          setPeerConnection(conn);
-          setupListener(conn);
-        } 
-        // Create game
-        else {
-          console.log("waiting for opponent...");
-          tempPeer.on("connection", function(conn) {
-            console.log("connected to opponent with ID: " + conn.peer);
-            setPeerConnection(conn);
-            setupListener(conn);
-          });
-        }
-      });
+      setupPtPConection(props);
     } 
     // Computer opponent
     else if (props.computerOpponentModeEnabled) {
@@ -111,13 +81,42 @@ export default function Game() {
     }
   }
 
+  function setupPtPConection(props) {
+    // State variables for online mode
+    setOnline(true);
+    setJoinId(props.joinId);
+    setPlayerSymbol(props.playerSymbol);
+    setOpponentSymbol(props.opponentSymbol);
+
+    // Create peer connection
+    var tempPeer = new Peer();
+    setPeer(tempPeer);
+    tempPeer.on("open", (id) => {
+      setGameStarted(true); 
+      console.log("My ID: " + id);
+      setPeerId(id);
+
+      // Join game
+      if (props.joinId != null) {
+        console.log("connecting to opponent with ID: " + props.joinId);
+        var conn = tempPeer.connect(props.joinId);
+        setPeerConnection(conn);
+        setupListener(conn);
+      } 
+      // Create game
+      else {
+        console.log("waiting for opponent...");
+        tempPeer.on("connection", function(conn) {
+          console.log("connected to opponent with ID: " + conn.peer);
+          setPeerConnection(conn);
+          setupListener(conn);
+        });
+      }
+    });
+  }
+
   function setupListener(conn) {
     conn.on("data", function(data) {
-      console.log("Received data: " + data);
-      // if (!gameStarted || gameOver || isItMyTurn(playerSymbol)) {
-      //   return;
-      // }
-
       const [boardNum, squareChanged] = JSON.parse(data);
       simulateAIMove([boardNum, squareChanged]);
     });
@@ -175,7 +174,7 @@ export default function Game() {
       return;
     }
 
-    // // other player's turn
+    // other player's turn - TODO: block moves when it's not the player's turn
     // if (online && !receivedMove && peerConnection && !isItMyTurn(playerSymbol)) {
     //   return;
     // }
@@ -184,8 +183,6 @@ export default function Game() {
     if (online && peerConnection) {
       peerConnection.send(JSON.stringify([boardNum, squareChanged]));
     }
-
-    console.log("handlePlay: " + boardNum + " " + squareChanged);
 
     const nextBoards = boards.slice();
     nextBoards[boardNum] = nextSquares;
