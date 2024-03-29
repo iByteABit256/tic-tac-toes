@@ -3,11 +3,12 @@
 }
 
 .status {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
+  margin-top: 5px;
   margin-bottom: 20px;
   text-align: center;
-  height: 40px;
+  height: 10px;
 }
 
 table {

@@ -3,10 +3,10 @@
   border: 2px solid #333;
   font-size: 24px;
   font-weight: bold;
-  line-height: 60px;
+  line-height: 40px;
   text-align: center;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
 }
 
 .activeSquare {
@@ -14,10 +14,10 @@
   border: 2px solid #333;
   font-size: 24px;
   font-weight: bold;
-  line-height: 60px;
+  line-height: 40px;
   text-align: center;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
 }
 
 .activeSquare:hover {
