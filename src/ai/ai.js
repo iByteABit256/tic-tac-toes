@@ -117,8 +117,8 @@ export function makeAIMove(
   );
 }
 
-export function simulateAIMove(aiMove) {
-  const [boardNum, squareNum] = aiMove;
+export function simulateMove(move) {
+  const [boardNum, squareNum] = move;
 
   const selector = `#board-${boardNum}-square-${squareNum}`;
 
