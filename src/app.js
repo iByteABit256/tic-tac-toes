@@ -278,6 +278,7 @@ export default function Game() {
             onScoreChange={handleScoreChange}
             soundEnabled={shouldPlaySound()}
             isItMyTurn={isItMyTurn(playerSymbol)}
+            onlineMode={online}
             receivedOnlineMove={receivedOnlineMove}
           />
         </div>,

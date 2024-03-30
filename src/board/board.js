@@ -13,6 +13,7 @@ export default function Board({
   onScoreChange,
   soundEnabled,
   isItMyTurn,
+  onlineMode,
   receivedOnlineMove,
 }) {
   const [winner, setWinner] = useState(null);
@@ -43,7 +44,7 @@ export default function Board({
 
   function handleClick(i) {
     // If not player's turn and online opponent hasn't played, ignore move
-    if (!isItMyTurn && !receivedOnlineMove) {
+    if (onlineMode && (!isItMyTurn && !receivedOnlineMove)) {
       return;
     }
 
