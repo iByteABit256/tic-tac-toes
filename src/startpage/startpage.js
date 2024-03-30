@@ -40,16 +40,6 @@ export default function StartScreen({ onStart }) {
     onStart(props);
   }
 
-  function createOnlineGame() {
-    const props = new GameStartProperties(false, null, null, null, true);
-    onStart(props);
-  }
-
-  function joinOnlineGame() {
-    const props = new GameStartProperties(false, null, null, null, true, joinId);
-    onStart(props);
-  }
-
   return (
     <div className={styles.startScreen}>
       <h1>Tic Tac Toes</h1>
@@ -57,7 +47,9 @@ export default function StartScreen({ onStart }) {
       {!aiModeSelected && !onlineModeSelected && (
         <>
           <button onClick={() => createMultiplayerGame()}>Play</button>
-          <button onClick={() => setOnlineModeSelected(true)}>Play Online</button>
+          <button onClick={() => setOnlineModeSelected(true)}>
+            Play Online
+          </button>
           <button onClick={() => setAiModeSelected(true)}>
             Play with Computer
           </button>
@@ -85,7 +77,7 @@ export default function StartScreen({ onStart }) {
           <input
             type="text"
             placeholder="Enter Opponent's ID"
-            onChange={(e) => setJoinId(e.target.value)}
+            onChange={(e) => setJoinId(e.target.value.trim())}
             style={{ marginBottom: "10px" }}
           />
           <button onClick={() => joinOnlineGame()}>Join</button>

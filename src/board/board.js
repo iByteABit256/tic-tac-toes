@@ -12,6 +12,8 @@ export default function Board({
   isActive,
   onScoreChange,
   soundEnabled,
+  isItMyTurn,
+  receivedOnlineMove,
 }) {
   const [winner, setWinner] = useState(null);
   const [isDraw, setIsDraw] = useState(false);
@@ -40,6 +42,11 @@ export default function Board({
   }
 
   function handleClick(i) {
+    // If not player's turn and online opponent hasn't played, ignore move
+    if (!isItMyTurn && !receivedOnlineMove) {
+      return;
+    }
+
     // Can't play on board if game is ended, square is filled or board is inactive
     if (squares[i] || winner || isDraw || !isActive) {
       return;

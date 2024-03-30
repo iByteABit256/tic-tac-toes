@@ -50,7 +50,7 @@ h1 {
   height: 40px;
   background-size: contain;
   position: absolute;
-  top: 20px;
+  top: 30px;
   right: 55px;
 }
 
@@ -62,7 +62,7 @@ h1 {
   height: 40px;
   background-size: contain;
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 10px;
 }
 
@@ -74,6 +74,10 @@ h1 {
   height: 40px;
   background-size: contain;
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 10px;
+}
+
+.online-info {
+  font-size: 13px;
 }

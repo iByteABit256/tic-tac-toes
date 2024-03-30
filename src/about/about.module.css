@@ -4,7 +4,7 @@ li {
 
 .about {
   position: absolute;
-  top: 20px;
+  top: 30px;
   right: 5px;
   padding: 10px;
   background-color: darkorange;
@@ -25,7 +25,7 @@ li {
 
 .aboutInactive {
   position: absolute;
-  top: 20px;
+  top: 30px;
   right: 5px;
   padding: 10px;
   background-color: black;
@@ -63,31 +63,10 @@ li {
   font-size: 16px;
   z-index: 998;
   max-height: 80vh;
-  overflow-y: auto; /* Adjusted to allow content scrolling */
 }
 
 .aboutWindowContent {
   padding-top: 40px;
-}
-
-.aboutWindow {
-  overflow-y: auto; /* Adjusted to allow content scrolling */
-}
-
-.aboutWindow::-webkit-scrollbar {
-  width: 12px; /* Width of the scrollbar */
-}
-
-.aboutWindow::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the scrollbar track */
-}
-
-.aboutWindow::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scrollbar thumb */
-}
-
-.aboutWindow::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color of the scrollbar thumb on hover */
 }
 
 .closeWindowButton {
