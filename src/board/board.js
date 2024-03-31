@@ -44,7 +44,7 @@ export default function Board({
 
   function handleClick(i) {
     // If not player's turn and online opponent hasn't played, ignore move
-    if (onlineMode && (!isItMyTurn && !receivedOnlineMove)) {
+    if (onlineMode && !isItMyTurn && !receivedOnlineMove) {
       return;
     }
 

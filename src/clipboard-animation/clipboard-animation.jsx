@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-function ClipboardAnimation({ textToCopy, children }) {
+function ClipboardAnimation({ peerId }) {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(textToCopy);
+    navigator.clipboard.writeText(peerId);
     setCopied(true);
     setTimeout(() => setCopied(false), 1000);
   };
@@ -16,9 +16,10 @@ function ClipboardAnimation({ textToCopy, children }) {
         alignItems: "center",
         cursor: "pointer",
       }}
-      onClick={copyToClipboard}
     >
-      <span style={{ marginRight: "5px" }}>{children}</span>
+      <span style={{ marginRight: "5px" }}>
+        <p onClick={copyToClipboard}>Your ID: {peerId}</p>
+      </span>
       <div
         style={{
           position: "relative",
@@ -29,7 +30,7 @@ function ClipboardAnimation({ textToCopy, children }) {
         <div
           style={{
             position: "absolute",
-            top: "-10px", 
+            top: "-10px",
             right: "-25px",
             opacity: copied ? 1 : 0,
             transition: "opacity 0.3s ease-in-out",
@@ -49,7 +50,7 @@ function ClipboardAnimation({ textToCopy, children }) {
           <Check
             isVisible={copied}
             style={{
-              color: "#28a745", 
+              color: "#28a745",
               position: "absolute",
               top: 0,
               left: 0,

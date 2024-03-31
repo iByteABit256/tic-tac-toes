@@ -310,15 +310,7 @@ export default function Game() {
           />
           {online && (
             <div className="online-info">
-              {/* Integrate clipboard animation component */}
-              <ClipboardAnimation copied={peerIdCopied} setCopied={setPeerIdCopied}>
-                <p onClick={() => {
-                  navigator.clipboard.writeText(peerId);
-                  setPeerIdCopied(true);
-                }}>
-                  Your ID: {peerId}
-                </p>
-              </ClipboardAnimation>
+              <ClipboardAnimation peerId={peerId} />
               {peerConnection &&
                 (isItMyTurn(playerSymbol) ? (
                   <p>{`Your (${playerSymbol}) turn`}</p>
