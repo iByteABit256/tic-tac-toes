@@ -7,6 +7,7 @@ import Board from "./board/board";
 import StartScreen from "./startpage/startpage";
 import EndScreen from "./endgame/endgame";
 import Peer from "peerjs";
+import ClipboardAnimation from "./clipboard-animation/clipboard-animation";
 
 export class GameStartProperties {
   computerOpponentModeEnabled;
@@ -38,6 +39,8 @@ export default function Game() {
   const [gameOver, setGameOver] = useState(false);
   const [playerSymbol, setPlayerSymbol] = useState("X");
   const [opponentSymbol, setOpponentSymbol] = useState("O");
+
+  const [peerIdCopied, setPeerIdCopied] = useState(false);
 
   // AI
   const [difficulty, setDifficulty] = useState(5);
@@ -307,9 +310,15 @@ export default function Game() {
           />
           {online && (
             <div className="online-info">
-              <p onClick={() => navigator.clipboard.writeText(peerId)}>
-                Your ID: {peerId}
-              </p>
+              {/* Integrate clipboard animation component */}
+              <ClipboardAnimation copied={peerIdCopied} setCopied={setPeerIdCopied}>
+                <p onClick={() => {
+                  navigator.clipboard.writeText(peerId);
+                  setPeerIdCopied(true);
+                }}>
+                  Your ID: {peerId}
+                </p>
+              </ClipboardAnimation>
               {peerConnection &&
                 (isItMyTurn(playerSymbol) ? (
                   <p>{`Your (${playerSymbol}) turn`}</p>
