@@ -40,8 +40,6 @@ export default function Game() {
   const [playerSymbol, setPlayerSymbol] = useState("X");
   const [opponentSymbol, setOpponentSymbol] = useState("O");
 
-  const [peerIdCopied, setPeerIdCopied] = useState(false);
-
   // AI
   const [difficulty, setDifficulty] = useState(5);
   const [computerOpponentModeEnabled, setComputerOpponentModeEnabled] =
