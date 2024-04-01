@@ -19,7 +19,6 @@
       "type": "image/png"
     }
   ],
-<<<<<<< HEAD
   "screenshots": [],
   "start_url": "/",
   "id": "/",
@@ -27,8 +26,4 @@
   "launch_handler": {
     "client_mode": "navigate-existing"
   }
-=======
-  "start_url": "/",
-  "prefer_related_applications": "false"
->>>>>>> 1fbedcb408dfb4e50f720ad473bcf5ff96439fbc
 }
