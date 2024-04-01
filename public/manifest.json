@@ -19,6 +19,11 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [],
   "start_url": "/",
-  "prefer_related_applications": "false"
+  "id": "/",
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }
