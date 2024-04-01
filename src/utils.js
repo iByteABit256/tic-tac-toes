@@ -6,6 +6,7 @@ export function getOpponentSymbol(playerSymbol) {
   return playerSymbol === "X" ? "O" : "X";
 }
 
+// Returns winner if there is one, otherwise null
 export function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -38,6 +39,7 @@ export class TotalScores {
   }
 }
 
+// Calculates game scores from a given game state
 export function calculateTotalScores(boards) {
   let gamesEnded = new Set();
   let scores = new Map([
@@ -64,10 +66,12 @@ export function calculateTotalScores(boards) {
   return new TotalScores(scores, gamesEnded);
 }
 
+// Checks if a board is filled (draw)
 export function boardIsFilled(squares) {
   return !squares.some((square) => square === null);
 }
 
+// Checks which boards are unfinished
 export function getUnfinishedBoards(gamesEnded) {
   const unfinishedBoards = new Set();
   for (let i = 0; i < 9; i++) {
@@ -79,6 +83,24 @@ export function getUnfinishedBoards(gamesEnded) {
   return unfinishedBoards;
 }
 
+// Simulates a move on the board
+export function simulateMove(move) {
+  const [boardNum, squareNum] = move;
+
+  const selector = `#board-${boardNum}-square-${squareNum}`;
+
+  // Find the square element corresponding to the given board and square numbers
+  const squareElement = document.querySelector(selector);
+
+  // Simulates a click on that square element
+  if (squareElement) {
+    simulateClick(squareElement);
+  } else {
+    console.error(`Square element not found for selector: ${selector}`);
+  }
+}
+
+// Simulates a click event on an element
 export function simulateClick(element) {
   const clickEvent = new MouseEvent("click", {
     bubbles: true,
@@ -87,6 +109,10 @@ export function simulateClick(element) {
   });
   element.dispatchEvent(clickEvent);
 }
+
+// ========================
+//      Debug utils
+// ========================
 
 export function gamePrettyPrint(boards) {
   let gameStr = "";

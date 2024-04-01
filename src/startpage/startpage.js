@@ -30,7 +30,7 @@ export default function StartScreen({ onStart }) {
     return randomPlayer === 0 ? "X" : "O";
   }
 
-  function createAiGame(playerSymbol = randomSymbol(), difficulty = 5) {
+  function createAiGame(playerSymbol = randomSymbol(), difficulty = 6) {
     const props = new GameStartProperties(
       true,
       playerSymbol,

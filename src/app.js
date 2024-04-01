@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getUnfinishedBoards } from "./utils";
-import { makeAIMove, simulateMove } from "./ai/ai";
+import { getUnfinishedBoards, simulateMove } from "./utils";
+import { makeAIMove } from "./ai/ai";
 import About from "./about/about";
 import ScoreBoard from "./scoreboard/scoreboard";
 import Board from "./board/board";
@@ -41,7 +41,7 @@ export default function Game() {
   const [opponentSymbol, setOpponentSymbol] = useState("O");
 
   // AI
-  const [difficulty, setDifficulty] = useState(5);
+  const [difficulty, setDifficulty] = useState(6);
   const [computerOpponentModeEnabled, setComputerOpponentModeEnabled] =
     useState(false);
 

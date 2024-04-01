@@ -1,8 +1,4 @@
-import {
-  simulateClick,
-  calculateTotalScores,
-  getUnfinishedBoards,
-} from "../utils";
+import { calculateTotalScores, getUnfinishedBoards } from "../utils";
 
 // Finds best move with Minimax and returns a [boardIdx, squareIdx] pair
 export function calculateBestMove(
@@ -115,20 +111,4 @@ export function makeAIMove(
     0,
     maxDepth,
   );
-}
-
-export function simulateMove(move) {
-  const [boardNum, squareNum] = move;
-
-  const selector = `#board-${boardNum}-square-${squareNum}`;
-
-  // Find the square element corresponding to the given board and square numbers
-  const squareElement = document.querySelector(selector);
-
-  // Simulates a click on that square element
-  if (squareElement) {
-    simulateClick(squareElement);
-  } else {
-    console.error(`Square element not found for selector: ${selector}`);
-  }
 }
