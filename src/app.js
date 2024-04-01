@@ -315,7 +315,18 @@ export default function Game() {
                 ) : (
                   <p>{`Opponent's (${opponentSymbol}) turn`}</p>
                 ))}
-              {!peerConnection && <p>Waiting for opponent...</p>}
+              {!peerConnection && (
+                <p
+                  style={{
+                    maxWidth: "fit-content",
+                    marginTop: "0px",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                >
+                  Waiting for opponent...
+                </p>
+              )}
             </div>
           )}
 

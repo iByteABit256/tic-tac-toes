@@ -17,7 +17,13 @@ function ClipboardAnimation({ peerId }) {
         cursor: "pointer",
       }}
     >
-      <span style={{ marginRight: "5px" }}>
+      <span
+        style={{
+          marginRight: "5px",
+          display: "inline-flex",
+          alignItems: "center",
+        }}
+      >
         <p onClick={copyToClipboard}>Your ID: {peerId}</p>
       </span>
       <div
@@ -31,7 +37,7 @@ function ClipboardAnimation({ peerId }) {
           style={{
             position: "absolute",
             top: "-10px",
-            right: "-25px",
+            right: "-2px",
             opacity: copied ? 1 : 0,
             transition: "opacity 0.3s ease-in-out",
           }}
