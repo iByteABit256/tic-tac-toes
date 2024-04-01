@@ -1,0 +1,22 @@
+{
+  "theme_color": "#f8b400",
+  "background_color": "#ffffff",
+  "orientation": "any",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "en-US",
+  "name": "Tic Tac Toes",
+  "short_name": "Tic Tac Toes",
+  "icons": [
+    {
+      "src": "logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "logo-196.png",
+      "sizes": "196x196",
+      "type": "image/png"
+    }
+  ]
+}
