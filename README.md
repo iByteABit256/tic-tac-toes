@@ -18,7 +18,13 @@ The game follows the following rules:
 - Once all boards are finished, the player with the most wins is the total winner, or it's a draw if both players have the same number of wins.
 - The first move can be played on any board.
 
-## Installation
+## PWA Installation
+
+The game is available as a [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/What_is_a_progressive_web_app).
+
+You can install it as an app on your device from the browser like [this](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing).
+
+## Local Installation
 
 To run the project locally, follow these steps:
 
