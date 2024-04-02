@@ -67,3 +67,10 @@ Please ensure that your contributions adhere to the GNU AGPL v3 license and foll
 ## License
 
 This project is licensed under the GNU Affero General Public License v3.0. See the [LICENSE](LICENSE) file for details.
+
+## Credits
+
+### Free Icons
+- <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/mute" title="mute icons">Mute icons created by pictranoosa - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/speaker" title="speaker icons">Speaker icons created by Pixel perfect - Flaticon</a>
