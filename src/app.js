@@ -306,6 +306,10 @@ export default function Game() {
             className={soundEnabled ? "sound-on" : "sound-off"}
             onClick={onSoundButtonClick}
           />
+          <button
+            className={"home-button"}
+            onClick={resetState}
+          />
           {online && (
             <div className="online-info">
               <ClipboardAnimation peerId={peerId} />

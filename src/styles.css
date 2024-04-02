@@ -50,7 +50,7 @@ h1 {
   height: 40px;
   background-size: contain;
   position: absolute;
-  top: 30px;
+  top: 40px;
   right: 55px;
 }
 
@@ -62,7 +62,7 @@ h1 {
   height: 40px;
   background-size: contain;
   position: absolute;
-  top: 30px;
+  top: 40px;
   left: 10px;
 }
 
@@ -74,8 +74,20 @@ h1 {
   height: 40px;
   background-size: contain;
   position: absolute;
-  top: 30px;
+  top: 40px;
   left: 10px;
+}
+
+.home-button {
+  background: url(../media/home.png) no-repeat;
+  cursor: pointer;
+  border: none;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  position: absolute;
+  top: 40px;
+  left: 55px;
 }
 
 .online-info {
