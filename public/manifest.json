@@ -3,10 +3,18 @@
   "background_color": "#ffffff",
   "orientation": "any",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "browser"
+  ],
   "dir": "auto",
   "lang": "en-US",
   "name": "Tic Tac Toes",
   "short_name": "Tic Tac Toes",
+  "description": "A strategic game where two players compete in 3x3 simultaneous Tic Tac Toe games",
+  "categories": ["games", "strategy", "tic-tac-toe", "multiplayer", "open-source"],
+  "iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
   "icons": [
     {
       "src": "logo-512.png",
