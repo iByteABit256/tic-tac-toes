@@ -14,6 +14,7 @@ li {
   height: 41px;
   border-radius: 50%;
   font-size: 20px;
+  color: black;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.25s ease;
@@ -28,7 +29,7 @@ li {
   top: 40px;
   right: 5px;
   padding: 10px;
-  background-color: black;
+  background-color: #f8b400;
   color: #fff;
   border: none;
   width: 40px;
@@ -45,7 +46,7 @@ li {
 }
 
 .about:hover {
-  background-color: black;
+  background-color: #ffd04f;
 }
 
 .aboutWindow {
@@ -73,7 +74,7 @@ li {
   position: absolute;
   top: 10px; /* Positioned at the bottom */
   right: 10px;
-  background-color: black;
+  background-color: #f8b400;
   color: white;
   font-size: 15px;
   border: 0;
@@ -89,7 +90,7 @@ li {
 }
 
 .closeWindowButton:hover {
-  background-color: #3f3f3f;
+  background-color: #ffd04f;
 }
 
 .overlay {
