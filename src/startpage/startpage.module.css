@@ -36,11 +36,28 @@ img {
 .horizontalButtonsContainer {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .horizontalButtonsContainer button {
   font-size: 1rem;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.startScreen select {
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #f8b400;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.startScreen select:hover {
+  background-color: #ffd04f;
 }

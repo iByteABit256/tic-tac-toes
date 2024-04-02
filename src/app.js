@@ -315,9 +315,9 @@ export default function Game() {
               <ClipboardAnimation peerId={peerId} />
               {peerConnection &&
                 (isItMyTurn(playerSymbol) ? (
-                  <p>{`Your (${playerSymbol}) turn`}</p>
+                  <p style={{textAlign: "center"}}>{`Your (${playerSymbol}) turn`}</p>
                 ) : (
-                  <p>{`Opponent's (${opponentSymbol}) turn`}</p>
+                  <p style={{textAlign: "center"}}>{`Opponent's (${opponentSymbol}) turn`}</p>
                 ))}
               {!peerConnection && (
                 <p
