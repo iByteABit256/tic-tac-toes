@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "xyz.tictactoes.www.twa",
+    "sha256_cert_fingerprints": ["9B:72:12:38:4B:27:A0:FA:6F:FC:33:6E:7C:58:20:62:41:25:0E:18:75:BD:99:49:9C:0D:C3:2E:41:35:9E:54"]
+  }
+}]
