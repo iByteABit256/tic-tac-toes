@@ -9,6 +9,7 @@ export default function StartScreen({ onStart }) {
   const [onlineModeSelected, setOnlineModeSelected] = useState(false);
   const [joinModeSelected, setJoinModeSelected] = useState(false);
   const [joinId, setJoinId] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState(6);
 
   function createMultiplayerGame() {
     const props = new GameStartProperties(false, null, null, null);
@@ -30,7 +31,7 @@ export default function StartScreen({ onStart }) {
     return randomPlayer === 0 ? "X" : "O";
   }
 
-  function createAiGame(playerSymbol = randomSymbol(), difficulty = 6) {
+  function createAiGame(playerSymbol, difficulty) {
     const props = new GameStartProperties(
       true,
       playerSymbol,
@@ -58,9 +59,19 @@ export default function StartScreen({ onStart }) {
       {aiModeSelected && (
         <>
           <div className={styles.horizontalButtonsContainer}>
-            <button onClick={() => createAiGame("X")}>Play first (X)</button>
-            <button onClick={() => createAiGame("O")}>Play second (O)</button>
-            <button onClick={() => createAiGame()}>Random</button>
+            <button onClick={() => createAiGame("X", selectedDifficulty)}>Play first (X)</button>
+            <button onClick={() => createAiGame("O", selectedDifficulty)}>Play second (O)</button>
+            <button onClick={() => createAiGame(randomSymbol(), selectedDifficulty)}>Random</button>
+          </div>
+          <div>
+            <select
+              value={selectedDifficulty}
+              onChange={(e) => setSelectedDifficulty(parseInt(e.target.value))}
+            >
+              <option value={6}>Easy</option>
+              <option value={7}>Medium</option>
+              <option value={8}>Hard</option>
+            </select>
           </div>
           <button onClick={() => setAiModeSelected(false)}>Back</button>
         </>
