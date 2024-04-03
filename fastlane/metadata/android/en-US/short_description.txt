@@ -1,0 +1,1 @@
+A strategic game where two players compete in 3x3 simultaneous Tic Tac Toe games.
