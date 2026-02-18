@@ -8,7 +8,7 @@ Inspired by [VSauce](https://www.youtube.com/shorts/_Na3a1ZrX7c)
 
 ## Description
 
-Tic Tac Toes is the classic Tic Tac Toe game with a twist. Instead of a single 3x3 board, there are 9 boards arranged in a 3x3 grid. Players take turns marking spaces in these boards, aiming to win individual boards and ultimately achieve the highest total score.
+Tic Tac Toes is a multidimensional game of tic tac toe. Instead of a single 3x3 board, there are 9 boards arranged in a 3x3 grid. Players take turns marking spaces in these boards, aiming to win individual boards and ultimately achieve the highest total score.
 
 The game follows the following rules:
 
